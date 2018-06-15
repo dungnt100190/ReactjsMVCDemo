@@ -24,7 +24,6 @@
     <None Remove="ClientApp\components\Contact.tsx" />
     <None Remove="ClientApp\components\Contact\AddEdit.tsx" />
     <None Remove="ClientApp\components\Contact\Detail.tsx" />
-    <None Remove="ClientApp\components\Contact\List.tsx" />
     <None Remove="ClientApp\_models.ts" />
   </ItemGroup>
 
@@ -33,10 +32,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\components\Contact.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Contact\Contact.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Contact\AddEdit.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Contact\Detail.tsx" />
-    <TypeScriptCompile Include="ClientApp\components\Contact\List.tsx" />
     <TypeScriptCompile Include="ClientApp\_models.ts" />
   </ItemGroup>
 

@@ -4,9 +4,9 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace DataModel.Services
+namespace DataModel
 {
-    public interface IEntityRepository<T> : IDisposable where T : class
+    public interface IEntityRepository<T> where T : class
     {
         IQueryable<T> GetAll(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "");
         T Get(object key);
@@ -91,27 +91,5 @@ namespace DataModel.Services
             _dbSet.Remove(entity);
             return _context.SaveChanges() >= 1;
         }
-
-        #region IDisposable Support
-        private bool disposed = false; // To detect redundant calls
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!this.disposed)
-            {
-                if (disposing)
-                {
-                    _context.Dispose();
-                }
-            }
-            this.disposed = true;
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        #endregion
     }
 }

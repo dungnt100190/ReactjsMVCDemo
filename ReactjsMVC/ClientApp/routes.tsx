@@ -4,7 +4,7 @@ import { Layout } from './components/Layout';
 import { Home } from './components/Home';
 import { FetchData } from './components/FetchData';
 import { Counter } from './components/Counter';
-import { Contact } from './components/Contact';
+import { Contact } from './components/Contact/Contact';
 
 export const routes = <Layout>
     <Route exact path='/' component={ Home } />
