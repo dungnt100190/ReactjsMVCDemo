@@ -20,6 +20,26 @@
     <Content Remove="ClientApp\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="ClientApp\components\Contact.tsx" />
+    <None Remove="ClientApp\components\Contact\AddEdit.tsx" />
+    <None Remove="ClientApp\components\Contact\Detail.tsx" />
+    <None Remove="ClientApp\components\Contact\List.tsx" />
+    <None Remove="ClientApp\_models.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DataModel\DataModel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\components\Contact.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Contact\AddEdit.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Contact\Detail.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Contact\List.tsx" />
+    <TypeScriptCompile Include="ClientApp\_models.ts" />
+  </ItemGroup>
+
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">
     <!-- Ensure Node.js is installed -->
     <Exec Command="node --version" ContinueOnError="true">
