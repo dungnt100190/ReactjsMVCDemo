@@ -1,24 +1,31 @@
-﻿using DataAccessLibrary.Models;
-using DataModel;
+﻿using DataModel;
+using DataModel.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace ReactjsMVC.Controllers
 {
-    [Route("api/Contact")]
     public class ContactController : Controller
     {
-        private DataHandler _dataHandler = new DataHandler();
+        private DataHandler _dataHandler;
 
-        [HttpGet("[action]")]
+        public ContactController(IOptions<AppSetting> setting)
+        {
+            _dataHandler = new DataHandler(setting.Value);
+        }
+
+        [HttpGet]
+        [Route("api/Contact/GetAllContacts")]
         public IEnumerable<Contact> GetAllContacts()
         {
             var data = _dataHandler.Contact.GetAll();
             return data;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet]
+        [Route("api/Contact/GetDetailContact/{id}")]
         public Contact GetDetailContact(int id)
         {
             var data = _dataHandler.Contact.Get(id);
@@ -26,6 +33,7 @@ namespace ReactjsMVC.Controllers
         }
 
         [HttpPost]
+        [Route("api/Contact/SaveContact")]
         public bool SaveContact([FromBody] Contact model)
         {
             Contact contact = _dataHandler.Contact.GetAll(filter: x => x.ContactId == model.ContactId).FirstOrDefault();
@@ -50,7 +58,8 @@ namespace ReactjsMVC.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete]
+        [Route("api/Contact/DeleteContactByID/{id}")]
         public bool DeleteContactByID(int id)
         {
             Contact contact = _dataHandler.Contact.GetAll(filter: x => x.ContactId == id).FirstOrDefault();

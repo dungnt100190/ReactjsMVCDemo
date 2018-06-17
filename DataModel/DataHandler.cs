@@ -1,12 +1,17 @@
-﻿using DataAccessLibrary.Models;
+﻿using DataModel.Models;
 using System;
 
 namespace DataModel
 {
     public class DataHandler : IDisposable
     {
-        private ContactDBContext _context = new ContactDBContext();
+        private ContactDBContext _context;
         private EntityRepository<Contact> _contact;
+
+        public DataHandler(AppSetting setting)
+        {
+            _context = new ContactDBContext(setting);
+        }
 
         public EntityRepository<Contact> Contact
         {

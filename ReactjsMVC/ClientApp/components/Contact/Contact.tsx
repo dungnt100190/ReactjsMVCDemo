@@ -29,27 +29,20 @@ export class Contact extends React.Component<RouteComponentProps<{}>, ContactSta
         fetch('api/Contact/GetAllContacts')
             .then(response => response.json() as Promise<models.Contact[]>)
             .then(data => {
-                this.setState({
-                    contactList: data,
-                    loading: false,
-                });
+                this.setState({ contactList: data, loading: false });
             });
-
-        this.handleCreate = this.handleCreate.bind(this);
-        this.handleEdit = this.handleEdit.bind(this);
-        this.handleDetail = this.handleDetail.bind(this);
-        this.handleDelete = this.handleDelete.bind(this);
     }
 
     public render() {
         let content = this.state.loading
-            ? <p>Loading...</p>
+            ? <p><em>Loading...</em></p> 
             : this.renderTable(this.state.contactList);
 
         return <div>
             <h1>Contact</h1>
-            <button className="action" onClick={this.handleCreate}>Add new</button>
+            <button className="action" onClick={this.handleCreate.bind(this)}>Add new</button>
             {content}
+            {this.renderPopup()}
         </div>;
     }
 
@@ -74,9 +67,9 @@ export class Contact extends React.Component<RouteComponentProps<{}>, ContactSta
                         <td>{item.email}</td>
                         <td>{item.phone}</td>
                         <td>
-                            <button className="action" onClick={this.handleDetail.bind(item.contactId)}>Detail</button>
-                            <button className="action" onClick={this.handleEdit.bind(item.contactId)}>Edit</button>
-                            <button className="action" onClick={this.handleDelete.bind(item.contactId)}>Delete</button>
+                            <button className="action" onClick={(id) => this.handleDetail(item.contactId)}>Detail</button>
+                            <button className="action" onClick={(id) => this.handleEdit(item.contactId)}>Edit</button>
+                            <button className="action" onClick={(id) => this.handleDelete(item.contactId)}>Delete</button>
                         </td>
                     </tr>
                 )}
@@ -84,20 +77,19 @@ export class Contact extends React.Component<RouteComponentProps<{}>, ContactSta
         </table>;
     }
 
-    private handleCreate() {
+    handleCreate() {
         this.setState({ showAdd: true, showDetail: false, showEdit: false });
     }
 
-    private handleEdit(id: number) {
+    handleEdit(id: number) {
         this.setState({ showEdit: true, showDetail: false, showAdd: false, activeId: id });
     }
 
-    private handleDetail(id: number) {
+    handleDetail(id: number) {
         this.setState({ showDetail: true, showAdd: false, showEdit: false, activeId: id });
-        this.renderPopup();
     }
 
-    private handleDelete(id: number) {
+    handleDelete(id: number) {
         if (!confirm('Are you sure you want to delete this?')) return;
         fetch('api/Contact/DeleteContactByID/' + id, { method: 'delete' })
             .then(data => {
@@ -128,6 +120,7 @@ export class Contact extends React.Component<RouteComponentProps<{}>, ContactSta
             return "";
         }
         if (this.state.showDetail) {
+            //this.props.history.push();
             return <DetailContact id={this.state.activeId} />;
         }
     }

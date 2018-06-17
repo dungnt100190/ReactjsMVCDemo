@@ -1,17 +1,26 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DataModel.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace DataAccessLibrary.Models
+namespace DataModel
 {
+
     public partial class ContactDBContext : DbContext
     {
         public virtual DbSet<Contact> Contact { get; set; }
+
+        private readonly AppSetting _setting;
+
+        public ContactDBContext(AppSetting setting)
+        {
+            _setting = setting;
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
                // #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer(@"Server=CMC-DUNGNT31;Database=ContactDB;User Id=CMC-DungNT31;Password=;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer(_setting.ConnectionString);
             }
         }
 

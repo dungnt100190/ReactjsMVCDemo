@@ -1,4 +1,4 @@
-﻿namespace DataAccessLibrary.Models
+﻿namespace DataModel.Models
 {
     public partial class Contact
     {

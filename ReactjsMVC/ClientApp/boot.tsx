@@ -1,4 +1,5 @@
 import './css/site.css';
+import './css/contact.css';
 import 'bootstrap';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';

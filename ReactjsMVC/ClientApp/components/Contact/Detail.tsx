@@ -1,4 +1,5 @@
 ﻿import * as React from 'react';
+import { RouteComponentProps } from 'react-router';
 import * as models from '../../_models';
 
 interface DetailState {
@@ -39,11 +40,11 @@ export class DetailContact extends React.Component<DetailProps, DetailState> {
 
     private static renderDetail(item: models.Contact) {
         return <div className="detail">
-            <label>Id</label><div>{item.contactId}</div>
-            <label>First Name</label><div>{item.firstName}</div>
-            <label>Last Name</label><div>{item.lastName}</div>
-            <label>Email</label><div>{item.email}</div>
-            <label>Phone</label><div>{item.phone}</div>
+            <div><label>Id:&nbsp;</label>{item.contactId}</div>
+            <div><label>First Name:&nbsp;</label>{item.firstName}</div>
+            <div><label>Last Name:&nbsp;</label>{item.lastName}</div>
+            <div><label>Email:&nbsp;</label>{item.email}</div>
+            <div><label>Phone:&nbsp;</label>{item.phone}</div>
         </div>;
     }
 }
