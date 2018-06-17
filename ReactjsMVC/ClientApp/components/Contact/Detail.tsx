@@ -30,7 +30,7 @@ export class DetailContact extends React.Component<DetailProps, DetailState> {
 
     public render() {
         let content = this.state.loading
-            ? <p>Loading...</p>
+            ? <p><em>Loading...</em></p> 
             : DetailContact.renderDetail(this.state.contact);
         return <div>
             <h1>Contact Detail</h1>

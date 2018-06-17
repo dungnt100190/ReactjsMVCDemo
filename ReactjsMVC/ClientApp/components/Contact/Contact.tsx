@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router';
 import * as Modal from 'react-modal';
 import * as models from '../../_models';
 
-//import { AddEdit } from './AddEdit';
+import { AddEdit } from './AddEdit';
 import { DetailContact } from './Detail';
 
 interface ContactState {
@@ -26,11 +26,16 @@ export class Contact extends React.Component<RouteComponentProps<{}>, ContactSta
             showDetail: false,
             activeId: 0
         };
+        this.loadData();
+    }
+
+    private loadData() {
         fetch('api/Contact/GetAllContacts')
             .then(response => response.json() as Promise<models.Contact[]>)
             .then(data => {
                 this.setState({ contactList: data, loading: false });
             });
+        return this;
     }
 
     public render() {
@@ -93,6 +98,9 @@ export class Contact extends React.Component<RouteComponentProps<{}>, ContactSta
         if (!confirm('Are you sure you want to delete this?')) return;
         fetch('api/Contact/DeleteContactByID/' + id, { method: 'delete' })
             .then(data => {
+                if (data) {
+                    alert("Delete successfully!");
+                }
                 this.setState(
                     {
                         contactList: this.state.contactList.filter((rec) => {
@@ -112,15 +120,12 @@ export class Contact extends React.Component<RouteComponentProps<{}>, ContactSta
 
     private renderPopupContent() {
         if (this.state.showAdd) {
-            //return <AddEdit id={null} dbaction="create" onSave={this.handlePopupSave.bind(this)} />;
-            return "";
+            return <AddEdit id={null} dbaction="add" onSave={this.handlePopupSave.bind(this)} />;
         }
         if (this.state.showEdit) {
-            //return <AddEdit id={this.state.activeId} dbaction="edit" onSave={this.handlePopupSave.bind(this)} />;
-            return "";
+            return <AddEdit id={this.state.activeId} dbaction="edit" onSave={this.handlePopupSave.bind(this)} />;
         }
         if (this.state.showDetail) {
-            //this.props.history.push();
             return <DetailContact id={this.state.activeId} />;
         }
     }
@@ -130,6 +135,15 @@ export class Contact extends React.Component<RouteComponentProps<{}>, ContactSta
     }
 
     private handlePopupSave(success: boolean) {
-        if (success) this.setState({ showAdd: false, showEdit: false });
+        if (success) {
+            if (this.state.showAdd) {
+                alert("Add new successfully!");
+            }
+            if (this.state.showEdit) {
+                alert("Edit successfully!");
+            }
+            this.setState({ showAdd: false, showEdit: false });
+            this.loadData();
+        };
     }
 }

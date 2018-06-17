@@ -34,7 +34,7 @@ namespace ReactjsMVC.Controllers
 
         [HttpPost]
         [Route("api/Contact/SaveContact")]
-        public bool SaveContact([FromBody] Contact model)
+        public bool SaveContact(Contact model)
         {
             Contact contact = _dataHandler.Contact.GetAll(filter: x => x.ContactId == model.ContactId).FirstOrDefault();
             if (contact == null)
